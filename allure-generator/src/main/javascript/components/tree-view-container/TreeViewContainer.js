@@ -4,6 +4,7 @@ import { View } from "backbone.marionette";
 import { behavior, className, on, regions } from "../../decorators";
 import gtag from "../../utils/gtag";
 import { getSettingsForTreePlugin } from "../../utils/settingsFactory";
+import DownloadData from "../DownloadData/DownloadData";
 import MarksToggleView from "../marks-toggle/MarksToggleView";
 import NodeSearchView from "../node-search/NodeSearchView";
 import NodeSorterView from "../node-sorter/NodeSorterView";
@@ -19,6 +20,7 @@ import template from "./TreeViewContainer.hbs";
   filter: ".tree__filter",
   filterMarks: ".tree__filter-marks",
   content: ".tree__content",
+  downloadData: ".fdownload"
 })
 class TreeViewContainer extends View {
   template = template;
@@ -84,6 +86,14 @@ class TreeViewContainer extends View {
       new MarksToggleView({
         settings: this.settings,
       }),
+    );
+    this.showChildView(
+      "downloadData",
+      new DownloadData({
+        collection: this.collection,
+        settings: this.settings,
+        state: this.state
+      })
     );
   }
 

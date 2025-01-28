@@ -8,6 +8,8 @@ target
 build
 schema
 .gradle
+**/bin/**
+allure.properties
 
 out/
 

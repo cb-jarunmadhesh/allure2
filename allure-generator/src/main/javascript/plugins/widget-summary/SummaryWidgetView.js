@@ -28,6 +28,12 @@ class SummaryWidgetView extends View {
       launchesCount: length,
     });
   }
+
+  templateContext() {
+    return {
+      notPassed : this.model.attributes.statistic.total - this.model.attributes.statistic.passed,
+    }
+  }
 }
 
 export default SummaryWidgetView;
