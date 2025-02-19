@@ -4,6 +4,8 @@ import { className, on } from "../../decorators";
 import translate from "../../helpers/t";
 import gtag from "../../utils/gtag";
 import { values } from "../../utils/marks";
+import { updateQueryParams } from "../../utils/queryParam"
+import { treePluginDefaults } from "../../utils/settingsFactory";
 import template from "./MarksToggleView.hbs";
 
 @className("marks-toggle")
@@ -33,6 +35,7 @@ class MarksToggleView extends View {
     const name = el.data("mark");
     const checked = el.hasClass("n-label-mark");
     const marks = this.settings.getVisibleMarks();
+    updateQueryParams(name, checked, treePluginDefaults["visibleMarks"][name])
     this.settings.setVisibleMarks(Object.assign({}, marks, { [name]: checked }));
     gtag("marks_toggle_click", { status: name, checked });
   }

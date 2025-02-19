@@ -28,6 +28,7 @@ import io.qameta.allure.core.Configuration;
 import io.qameta.allure.core.MarkdownDescriptionsPlugin;
 import io.qameta.allure.core.Plugin;
 import io.qameta.allure.core.TestsResultsPlugin;
+import io.qameta.allure.derivedstatistics.DerivedStatisticsPlugin;
 import io.qameta.allure.duration.DurationPlugin;
 import io.qameta.allure.duration.DurationTrendPlugin;
 import io.qameta.allure.environment.Allure1EnvironmentPlugin;
@@ -103,6 +104,7 @@ public final class DummyReportGenerator {
             new InfluxDbExportPlugin(),
             new PrometheusExportPlugin(),
             new SummaryPlugin(),
+            new DerivedStatisticsPlugin(),
             new ExecutorPlugin(),
             new LaunchPlugin(),
             new Allure1Plugin(),

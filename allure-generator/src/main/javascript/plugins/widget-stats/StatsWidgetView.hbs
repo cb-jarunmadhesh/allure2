@@ -1,0 +1,24 @@
+<div class="{{b 'widget' 'flex-line'}}">
+    <div class="container">
+        <div class="{{b 'stats-widget' 'stats__container'}}">
+            <a href="/#suites?newFailed=true" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'stats-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{derivedStats.newlyFailed}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">Newly Failed</div>
+                </div>
+            </a>
+            <a href="/#suites?flaky=true" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'stats-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{derivedStats.flakyTests}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">Flaky</div>
+                </div>
+            </a>
+            <a href="/#suites?retriesStatusChange=true" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'stats-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{derivedStats.retried}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">Retried</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

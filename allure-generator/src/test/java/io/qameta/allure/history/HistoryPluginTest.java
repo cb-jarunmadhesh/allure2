@@ -71,7 +71,7 @@ class HistoryPluginTest {
         new HistoryPlugin().getData(singletonList(
                 createLaunchResults(extra, testResult)
         ));
-        assertThat(testResult.isNewFailed()).isFalse();
+        assertThat(testResult.isNewFailed()).isTrue();
         assertThat(testResult.isFlaky()).isFalse();
         assertThat(testResult.isNewPassed()).isFalse();
         assertThat(testResult.isNewBroken()).isTrue();

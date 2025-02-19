@@ -1,11 +1,12 @@
 import LocalStorageModel from "../data/localstorage/LocalStorageModel";
+import { getQueryParams } from "./queryParam";
 
 const globalSettingsDefaults = {
   sidebarCollapsed: false,
   sideBySidePosition: [50, 50],
 };
 
-const treePluginDefaults = {
+export const treePluginDefaults = {
   visibleStatuses: {
     failed: true,
     broken: true,
@@ -118,7 +119,8 @@ function getSettingsForTreePlugin(pluginName, defaults = treePluginDefaults) {
     },
 
     getVisibleMarks() {
-      return this.get("visibleMarks");
+      const params = getQueryParams();
+      return params || this.get("visibleMarks");
     },
 
     setVisibleMarks(value) {

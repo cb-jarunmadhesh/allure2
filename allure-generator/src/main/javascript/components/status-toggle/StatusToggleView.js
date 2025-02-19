@@ -3,6 +3,8 @@ import { View } from "backbone.marionette";
 import { className, on } from "../../decorators";
 import translate from "../../helpers/t";
 import gtag from "../../utils/gtag";
+import { updateQueryParams } from "../../utils/queryParam";
+import { treePluginDefaults } from "../../utils/settingsFactory";
 import { values } from "../../utils/statuses";
 import template from "./StatusToggleView.hbs";
 
@@ -34,6 +36,7 @@ class StatusToggleView extends View {
     const name = el.data("status");
     const checked = el.hasClass("n-label");
     const statuses = this.settings.getVisibleStatuses();
+    updateQueryParams(name, checked, treePluginDefaults["visibleStatuses"][name])
     this.settings.setVisibleStatuses(Object.assign({}, statuses, { [name]: checked }));
     gtag("status_toggle_click", { status: name, checked });
   }

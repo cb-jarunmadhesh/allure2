@@ -4,7 +4,7 @@ import { View } from "backbone.marionette";
 import { behavior, className, on, regions } from "../../decorators";
 import gtag from "../../utils/gtag";
 import { getSettingsForTreePlugin } from "../../utils/settingsFactory";
-import DownloadData from "../DownloadData/DownloadData";
+import DownloadData from "../download-data/DownloadData";
 import MarksToggleView from "../marks-toggle/MarksToggleView";
 import NodeSearchView from "../node-search/NodeSearchView";
 import NodeSorterView from "../node-sorter/NodeSorterView";

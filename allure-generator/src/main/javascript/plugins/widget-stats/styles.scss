@@ -1,0 +1,30 @@
+.stats-widget {
+  padding: 1em 0;
+
+  &__stats__container {
+
+    display: flex;
+    gap: 10px;
+
+    margin-top: 2em;
+    margin-bottom: 1em;
+
+    &__stats {
+      padding: 2em 0;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+}
+
+.a {
+  color: inherit; /* Inherit text color from parent */
+  text-decoration: none; /* Remove underline */
+}
+
+.a:hover {
+  color: gray;
+}
+

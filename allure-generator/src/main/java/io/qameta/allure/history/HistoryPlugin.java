@@ -88,17 +88,37 @@ public class HistoryPlugin extends CommonJsonAggregator2 implements Reader {
 
     private boolean isNewFailed(final HistoryItem current,
                                 final List<HistoryItem> prev) {
-        return statusChangeTo(Status.FAILED, current, prev);
+        return statusChangeTo(Status.FAILED, current, prev)
+                || statusChangeTo(Status.BROKEN, current, prev)
+                || isNewtestAndMatchStatus(Status.FAILED, current, prev)
+                || isNewtestAndMatchStatus(Status.BROKEN, current, prev);
     }
 
     private boolean isNewBroken(final HistoryItem current,
                                 final List<HistoryItem> prev) {
-        return statusChangeTo(Status.BROKEN, current, prev);
+        return statusChangeTo(Status.BROKEN, current, prev)
+                || isNewtestAndMatchStatus(Status.BROKEN, current, prev);
     }
 
     private boolean isNewPassed(final HistoryItem current,
                                 final List<HistoryItem> prev) {
-        return statusChangeTo(Status.PASSED, current, prev);
+        return statusChangeTo(Status.PASSED, current, prev)
+                || isNewtestAndMatchStatus(Status.PASSED, current, prev);
+    }
+
+    /**
+     * A new test without any history that fails should also be considered as newFailed.
+     * and the same for passed and broken.
+     *
+     * @param target Target Status
+     * @param current Test's current result
+     * @param prev Test's prev results
+     * @return if the test is new and matches the target status
+     */
+    private boolean isNewtestAndMatchStatus(final Status target,
+                                            final HistoryItem current,
+                                            final List<HistoryItem> prev) {
+        return prev.isEmpty() && target.equals(current.getStatus());
     }
 
     private boolean statusChangeTo(final Status target,

@@ -26,6 +26,7 @@ import "./plugins/widget-retry-trend";
 import "./plugins/widget-categories-trend";
 
 import "./plugins/widget-summary";
+import "./plugins/widget-stats";
 import "./plugins/widget-history-trend";
 import "./plugins/widget-suites";
 import "./plugins/widget-categories";
