@@ -12,18 +12,24 @@
             </div>
         </h2>
         <div class="{{b 'summary-widget' 'stats__container'}}">
-            <div class="{{b 'summary-widget' 'stats'}} splash">
-                <div class="{{b 'splash' 'title'}}">{{statistic.total}}</div>
-                <div class="{{b 'splash' 'subtitle'}}">{{t 'widget.summary.testResults' count=statistic.total}}</div>
-            </div>
-            <div class="{{b 'summary-widget' 'stats'}} splash">
-                <div class="{{b 'splash' 'title'}}">{{statistic.passed}}</div>
-                <div class="{{b 'splash' 'subtitle'}}">Passed</div>
-            </div>
-            <div class="{{b 'summary-widget' 'stats'}} splash">
-                <div class="{{b 'splash' 'title'}}">{{notPassed}}</div>
-                <div class="{{b 'splash' 'subtitle'}}">Failed</div>
-            </div>
+            <a href="#suites" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'summary-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{statistic.total}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">{{t 'widget.summary.testResults' count=statistic.total}}</div>
+                </div>
+            </a>
+            <a href="#suites?broken=false&failed=false&skipped=false&unknown=false" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'summary-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{statistic.passed}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">Passed</div>
+                </div>
+            </a>
+            <a href="#suites?passed=false" class="{{b 'stats-widget' 'stats'}} splash a">
+                <div class="{{b 'summary-widget' 'stats'}} splash">
+                    <div class="{{b 'splash' 'title'}}">{{notPassed}}</div>
+                    <div class="{{b 'splash' 'subtitle'}}">Failed</div>
+                </div>
+            </a>
         </div>
     </div>
     <div class="{{b 'widget' 'column'}} {{b 'summary-widget' 'chart'}}"></div>

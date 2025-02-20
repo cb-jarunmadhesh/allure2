@@ -1,9 +1,8 @@
 import { history } from "backbone";
 
 /**
- * 
  * initializing here because this stupid linting
- * is not allowing backtildes for strings if 
+ * is not allowing backtildes for strings if
  * it doesn't have any expressions
  */
 const COLON = ":"
@@ -23,6 +22,16 @@ export function getQueryParams() {
   return queryParams;
 }
 
+export function stringifyParams(queryParams) {
+  const uri = JSON.stringify(queryParams)
+    .replace(/,/g, "&")
+    .replace(/:/g, "=")
+    .replace(/{/g, "")
+    .replace(/}/g, "")
+    .replace(/"/g, "");
+  return encodeURI(uri);
+}
+
 export function updateQueryParams(key, value, defaultValue) {
   const fragment = history.getFragment().split("?")[0]
   const params = getQueryParams();
@@ -33,14 +42,7 @@ export function updateQueryParams(key, value, defaultValue) {
     params[key] = value;
   }
 
-  let uri = JSON.stringify(params)
-    .replace(/,/g, "&")
-    .replace(/:/g, "=")
-    .replace(/{/g, "")
-    .replace(/}/g, "")
-    .replace(/"/g, "");
-  uri = encodeURI(uri);
-
+  const uri = stringifyParams(params);
   const newUrl = `/${fragment}?${uri}`;
 
   history.navigate(newUrl, { trigger: false, replace: true });

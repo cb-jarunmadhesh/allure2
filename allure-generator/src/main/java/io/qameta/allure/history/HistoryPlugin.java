@@ -88,10 +88,13 @@ public class HistoryPlugin extends CommonJsonAggregator2 implements Reader {
 
     private boolean isNewFailed(final HistoryItem current,
                                 final List<HistoryItem> prev) {
-        return statusChangeTo(Status.FAILED, current, prev)
+        final boolean changedToFailed = statusChangeTo(Status.FAILED, current, prev)
                 || statusChangeTo(Status.BROKEN, current, prev)
-                || isNewtestAndMatchStatus(Status.FAILED, current, prev)
+                || statusChangeTo(Status.SKIPPED, current, prev);
+        final boolean newAndFailed = isNewtestAndMatchStatus(Status.FAILED, current, prev)
+                || isNewtestAndMatchStatus(Status.SKIPPED, current, prev)
                 || isNewtestAndMatchStatus(Status.BROKEN, current, prev);
+        return changedToFailed || newAndFailed;
     }
 
     private boolean isNewBroken(final HistoryItem current,

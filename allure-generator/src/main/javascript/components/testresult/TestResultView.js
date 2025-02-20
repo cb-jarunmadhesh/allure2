@@ -1,9 +1,11 @@
 import "./styles.scss";
+import { history } from "backbone";
 import { View } from "backbone.marionette";
 import { findWhere } from "underscore";
 import { behavior, className, on, regions } from "../../decorators";
 import translate from "../../helpers/t";
 import pluginsRegistry from "../../utils/pluginsRegistry";
+import { getQueryParams, stringifyParams } from "../../utils/queryParam";
 import AttachmentView from "../attachment/AttachmentView";
 import ErrorSplashView from "../error-splash/ErrorSplashView";
 import ModalView from "../modal/ModalView";
@@ -81,6 +83,18 @@ class TestResultView extends View {
         };
       }),
     };
+  }
+
+  @on("click .link__no-decoration")
+  onBackClick(event) {
+    event.preventDefault();
+
+    const linkElement = event.currentTarget;
+    const href = linkElement.getAttribute("href");
+
+    const query = stringifyParams(getQueryParams())
+    const newUrl = `${href}?${query}`;
+    history.navigate(newUrl, { trigger: true, replace: true });
   }
 
   @on("click .status-details__trace-toggle")

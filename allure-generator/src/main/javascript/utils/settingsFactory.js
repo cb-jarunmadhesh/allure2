@@ -111,7 +111,17 @@ function getSettingsForTreePlugin(pluginName, defaults = treePluginDefaults) {
     },
 
     getVisibleStatuses() {
-      return this.get("visibleStatuses");
+      const params = getQueryParams();
+      const visibleStatuses = this.get("visibleStatuses")
+      Object.keys(visibleStatuses).forEach((param) => {
+        if (params[param] !== undefined) {
+          visibleStatuses[param] = params[param] === "true"
+        } else {
+          visibleStatuses[param] = true;
+        }
+      })
+      this.setVisibleStatuses(visibleStatuses);
+      return visibleStatuses;
     },
 
     setVisibleStatuses(value) {
@@ -120,7 +130,16 @@ function getSettingsForTreePlugin(pluginName, defaults = treePluginDefaults) {
 
     getVisibleMarks() {
       const params = getQueryParams();
-      return params || this.get("visibleMarks");
+      const visibleMarks = this.get("visibleMarks")
+      Object.keys(visibleMarks).forEach((param) => {
+        if (params[param] !== undefined) {
+          visibleMarks[param] = params[param] === "true"
+        } else {
+          visibleMarks[param] = false;
+        }
+      })
+      this.setVisibleMarks(visibleMarks);
+      return visibleMarks;
     },
 
     setVisibleMarks(value) {

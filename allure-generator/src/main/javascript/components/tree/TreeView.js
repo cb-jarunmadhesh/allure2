@@ -5,6 +5,7 @@ import { byCriteria, byMark, byStatuses, mix } from "../../data/tree/filter";
 import { behavior, className, on } from "../../decorators";
 import router from "../../router";
 import hotkeys from "../../utils/hotkeys";
+import { getQueryParams, stringifyParams } from "../../utils/queryParam";
 import { SEARCH_QUERY_KEY } from "../node-search/NodeSearchView";
 import template from "./TreeView.hbs";
 
@@ -19,6 +20,7 @@ class TreeView extends View {
     this.routeState = routeState;
     this.baseUrl = baseUrl;
     this.tabName = tabName;
+    this.query = stringifyParams(getQueryParams());
     this.setState();
     this.listenTo(this.routeState, "change:treeNode", this.selectNode);
     this.listenTo(this.routeState, "change:testResultTab", this.render);
@@ -168,23 +170,25 @@ class TreeView extends View {
       if (this.routeState.get("attachment")) {
         router.setSearch({ attachment: null });
       } else {
-        router.toUrl(`${this.baseUrl}/${current.testGroup}`);
+        router.toUrl(`${this.baseUrl}/${current.testGroup}?${this.query}`);
       }
     } else if (current.testGroup) {
-      router.toUrl(`${this.baseUrl}`);
+      router.toUrl(`${this.baseUrl}?${this.query}`);
     }
   }
 
   selectTestResult(testResult) {
     if (testResult) {
       const tab = this.routeState.get("testResultTab") || "";
-      router.toUrl(`${this.baseUrl}/${testResult.parentUid}/${testResult.uid}/${tab}`, {
+      router.toUrl(`${this.baseUrl}/${testResult.parentUid}/${testResult.uid}/${tab}?${this.query}`, {
         replace: true,
       });
     }
   }
 
   templateContext() {
+    this.query = stringifyParams(getQueryParams())
+
     return {
       cls: this.className,
       baseUrl: this.baseUrl,
@@ -195,6 +199,7 @@ class TreeView extends View {
       tabName: this.tabName,
       items: this.collection.toJSON(),
       testResultTab: this.routeState.get("testResultTab") || "",
+      query: this.query,
     };
   }
 }
