@@ -1,4 +1,6 @@
-.side-nav__brand {
-  background: url('custom-logo.svg') no-repeat left center !important;
-  margin-left: 10px;
-}
+.side-nav__brand {   
+  background: url('chargebee-logo.svg') no-repeat left center !important;   
+  margin-left: 3px;   
+  height: 40px;   
+  Background-size: contain !important; 
+} 

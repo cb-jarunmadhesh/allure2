@@ -34,4 +34,13 @@
       opacity: 1;
     }
   }
+  &__download2 {
+    cursor: pointer;
+    padding: 4px;
+    color: $text-color;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

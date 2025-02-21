@@ -1,6 +1,7 @@
 import { View } from "backbone.marionette";
 import TestResultModel from "../../data/testresult/TestResultModel"
 import { on } from "../../decorators";
+import { getQueryParams } from "../../utils/queryParam";
 import template from "./DownloadData.hbs";
 
 class DownloadData extends View {
@@ -11,6 +12,7 @@ class DownloadData extends View {
     this.downloadableData = this.collection.testResults
     this.settings = settings;
     this.state = state
+    this.isLoading = false;
     this.listenTo(this.settings, "change", this.render);
   }
 
@@ -35,8 +37,25 @@ class DownloadData extends View {
     return [headers.join(","), ...rows].join("\n");
   };
 
+  templateContext() {
+    return {
+      isLoading: this.isLoading
+    }
+  }
+
   @on("click")
   async onClick() {
+
+    this.isLoading = true;
+    this.render();
+
+    const query = getQueryParams();
+    if(Object.keys(query).length === 0) {
+      alert("Please apply filters to download the data");
+      this.isLoading = false;
+      this.render();
+      return;
+    }
 
     const dataToDownload = []
 
@@ -45,15 +64,23 @@ class DownloadData extends View {
       await model.fetch({
         url: model.url(),
         success: (testData) => {
+          const suiteName = testData.attributes.labels.find(label => label.name === "parentSuite")?.value;
+          const moduleName = suiteName? `${suiteName.split(" ")[0]}-testing`.toLowerCase() : "";
+          const className = testData.attributes.fullName.split(".").slice(-2, -1)[0];
+
           dataToDownload.push({
-            name: testData.attributes.name,
+            module: moduleName,
+            parentSuite: suiteName,
+            className: className,
+            testMethod : testData.attributes.fullName.split(".").pop(),
             status: testData.attributes.status,
+            name: testData.attributes.name,
+            fullName: testData.attributes.fullName,
+            description: testData.attributes.description,
             startTime : new Date(testData.attributes.time.start).toString(),
             stopTime : new Date(testData.attributes.time.stop).toString(),
             duration: testData.attributes.time.duration,
-            testMethod : testData.attributes.fullName.split(".").pop(),
-            testClass: testData.attributes.fullName,
-            description: testData.attributes.description
+            retry: `${moduleName}.${className}`
           })
         }
       });
@@ -66,9 +93,12 @@ class DownloadData extends View {
 
     const link = document.createElement("a");
     link.href = downloadUrl;
-    link.download = "data.csv";
+    link.download = "filtered-data.csv";
     link.click();
     URL.revokeObjectURL(downloadUrl);
+
+    this.isLoading = false;
+    this.render();
   }
 }
 

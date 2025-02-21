@@ -32,6 +32,11 @@ class SummaryWidgetView extends View {
   templateContext() {
     return {
       notPassed : this.model.attributes.statistic.total - this.model.attributes.statistic.passed,
+      runDate: new Date(this.model.attributes.time.stop).toLocaleDateString('en-US', {
+          month: "short",
+          day: "2-digit",
+          year: "numeric"
+        }).replace(",", "")
     }
   }
 }
