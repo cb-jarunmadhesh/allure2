@@ -100,7 +100,7 @@ class PieChartView extends BaseChartView {
   }
 
   getChartTitle() {
-    const { passed = 0, failed = 0, broken = 0, total = 0 } = this.statistic;
+    const { passed = 0, total = 0 } = this.statistic;
     if (!total) {
       return "???";
     }
@@ -109,7 +109,7 @@ class PieChartView extends BaseChartView {
       return "0%";
     }
 
-    return `${this.formatNumber((passed / (passed + failed + broken)) * 100)}%`;
+    return `${this.formatNumber((passed / total) * 100)}%`;
   }
 
   getTooltipContent({ data }) {
